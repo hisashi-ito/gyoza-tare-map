@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+dist/
+build/
+.venv/
+venv/
+
+# Data (large/generated files)
+data/raw/
+data/extracted/
+data/classified/
+data/cache.db
+
+# Outputs (generated)
+outputs/
+
+# Geo data (downloaded separately)
+data/geo/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store

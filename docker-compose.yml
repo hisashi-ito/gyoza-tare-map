@@ -1,0 +1,45 @@
+services:
+  app:
+    build: .
+    volumes:
+      # Mount local directories so data/outputs persist on the host
+      - ./data:/app/data
+      - ./outputs:/app/outputs
+      - ./seeds.yaml:/app/seeds.yaml
+      # Mount source for development (live reload without rebuild)
+      - ./src:/app/src
+      - ./scripts:/app/scripts
+    environment:
+      - PYTHONUNBUFFERED=1
+    # GPU support (Phase 2: local LLM inference)
+    # Uncomment when GPU is needed:
+    # deploy:
+    #   resources:
+    #     reservations:
+    #       devices:
+    #         - driver: nvidia
+    #           count: all
+    #           capabilities: [gpu]
+
+  # Run a specific stage only
+  crawl:
+    build: .
+    volumes:
+      - ./data:/app/data
+      - ./seeds.yaml:/app/seeds.yaml
+      - ./src:/app/src
+      - ./scripts:/app/scripts
+    environment:
+      - PYTHONUNBUFFERED=1
+    command: python scripts/run_pipeline.py --skip-crawl=false --skip-map
+
+  skip-crawl:
+    build: .
+    volumes:
+      - ./data:/app/data
+      - ./outputs:/app/outputs
+      - ./src:/app/src
+      - ./scripts:/app/scripts
+    environment:
+      - PYTHONUNBUFFERED=1
+    command: python scripts/run_pipeline.py --skip-crawl --skip-map

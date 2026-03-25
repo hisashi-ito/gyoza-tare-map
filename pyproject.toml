@@ -1,0 +1,36 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "gyoza-tare-map"
+version = "0.1.0"
+requires-python = ">=3.11"
+dependencies = [
+    # crawling
+    "httpx>=0.27",
+    "aiohttp>=3.9",
+    "feedparser>=6.0",
+    "trafilatura>=1.10",
+    "playwright>=1.44",
+    # encoding detection
+    "charset-normalizer>=3.3",
+    # data
+    "pandas>=2.2",
+    "pyarrow>=16",
+    # geo
+    "geopandas>=0.14",
+    "folium>=0.16",
+    # NLP (Phase 2)
+    "transformers>=4.40",
+    "sentence-transformers>=3.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8",
+    "pytest-asyncio>=0.23",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
