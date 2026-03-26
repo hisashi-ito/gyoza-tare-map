@@ -34,6 +34,16 @@ services:
       - PYTHONUNBUFFERED=1
     command: python scripts/run_pipeline.py --skip-crawl=false --skip-map
 
+  discover:
+    build: .
+    volumes:
+      - ./seeds.yaml:/app/seeds.yaml
+      - ./src:/app/src
+      - ./scripts:/app/scripts
+    environment:
+      - PYTHONUNBUFFERED=1
+    command: python scripts/discover_seeds.py
+
   skip-crawl:
     build: .
     volumes:
