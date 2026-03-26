@@ -126,3 +126,161 @@ sources:
   - type: rss
     url: https://gyoza-16.hatenablog.com/feed
     prefectures: ["兵庫県"]
+
+  # 神戸ハーバーランドのぎょうざの一休
+  - type: html
+    url: https://www.yaneshin.net/entry/2024/03/23/233655
+    prefectures: ["兵庫県"]
+
+  # 神戸南京町『元祖 ぎょうざ苑』冷凍餃子テイクアウト
+  - type: html
+    url: https://smilehalf.blog.jp/archives/14978575.html
+    prefectures: ["兵庫県"]
+
+  # 神戸発祥「餃子は味噌だれ」 中国で抱いた郷愁が原点（日経）
+  - type: html
+    url: https://www.nikkei.com/article/DGXZQOUF226RF0S4A021C2000000/
+    prefectures: ["兵庫県"]
+
+  # -----------------------------------------------------------------------
+  # 東京都（追加）
+  # -----------------------------------------------------------------------
+
+  # 全国3000店以上の餃子を食べ歩いたマニアが推すご当地餃子の名店
+  - type: html
+    url: https://kinto-jp.com/magazine/kmz20220929/
+    prefectures: ["東京都"]
+
+  # 巣鴨「ファイト餃子」俵型の独特の餃子
+  - type: html
+    url: https://dailyportalz.jp/kiji/fight-gyouza-white-gyouza
+    prefectures: ["東京都"]
+
+  # 予約の取れない名店「餃子坊 豚八戒」
+  - type: html
+    url: https://www.hotpepper.jp/mesitsu/entry/oomori-rice/2021-00666
+    prefectures: ["東京都"]
+
+  # 神保町「餃子の肉太郎」粗挽肉餃子
+  - type: html
+    url: https://food.onarimon.jp/entry/2025/06/27/194722
+    prefectures: ["東京都"]
+
+  # 【検証】酢コショウ以外の「餃子のうまい食べ方」（su_kosho 候補）
+  - type: html
+    url: https://www.hotpepper.jp/mesitsu/entry/maguro/2024-00944
+    prefectures: ["東京都"]
+
+  # 五反田「餃子専門 八宝亭」せんべろ餃子
+  - type: html
+    url: https://koki08.hatenablog.com/entry/gotanda-happotei
+    prefectures: ["東京都"]
+
+  # 餃子マニアに聞いた「一度引き返せないほどウマい食べ方」
+  - type: html
+    url: https://rocketnews24.com/2022/05/27/1637785/
+    prefectures: ["東京都"]
+
+  # -----------------------------------------------------------------------
+  # 大阪府（追加）
+  # -----------------------------------------------------------------------
+
+  # 各国の餃子を並べて比べたい（海外たれスタイル比較）
+  - type: html
+    url: https://dailyportalz.jp/kiji/Gyoza-from-different-countries
+    prefectures: ["大阪府"]
+
+  # 府中名物「くりばやし」肉汁餃子
+  - type: html
+    url: https://rocketnews24.com/2023/05/24/1859708/
+    prefectures: ["大阪府"]
+
+  # 「せみ餃子」— 全国販売と思っていた大阪名物
+  - type: html
+    url: https://koulog.hatenadiary.com/entry/hibinokurasi523
+    prefectures: ["大阪府"]
+
+  # 台北餃子 張記（大阪）
+  - type: html
+    url: https://chibasa-n.hatenablog.com/entry/2021/07/12/070000
+    prefectures: ["大阪府"]
+
+  # -----------------------------------------------------------------------
+  # 神奈川県（追加）
+  # -----------------------------------------------------------------------
+
+  # 無人販売所「餃子の雪松」食べた感想
+  - type: html
+    url: https://www.illnessaosan.info/entry/gyoza_yukimatsu
+    prefectures: ["神奈川県"]
+
+  # 横浜「とんとん」お取り寄せレポート
+  - type: html
+    url: https://rocketnews24.com/2021/04/03/1475404/
+    prefectures: ["神奈川県"]
+
+  # -----------------------------------------------------------------------
+  # 栃木県（宇都宮）
+  # -----------------------------------------------------------------------
+
+  # 宇都宮餃子「みんみん」は栃木県民のアイデンティティ
+  - type: html
+    url: https://soredoko.jp/entry/2022/06/17/103000
+    prefectures: ["栃木県"]
+
+  # 宇都宮と浜松だけじゃない！隠れた餃子大国「宮崎」
+  - type: html
+    url: https://soredoko.jp/entry/2022/01/26/103000
+    prefectures: ["栃木県"]
+
+  # 栃木グルメ〜餃子食い倒れの旅〜
+  - type: html
+    url: https://sportskansen.hatenablog.jp/entry/2021/12/21/180000
+    prefectures: ["栃木県"]
+
+  # 宇都宮『来らっせ』餃子を食べ比べ
+  - type: html
+    url: https://www.manarinafutagomama.com/entry/2022/12/21/193000
+    prefectures: ["栃木県"]
+
+  # コシヒカリのおにぎりと正嗣の餃子
+  - type: html
+    url: https://a-jyanaika.hatenablog.com/entry/2025/06/23/002300
+    prefectures: ["栃木県"]
+
+  # -----------------------------------------------------------------------
+  # 福岡県
+  # -----------------------------------------------------------------------
+
+  # 水餃子を作ってみよう（博多スタイル）
+  - type: html
+    url: https://www.japan-eat.com/entry/2023/10/16/115637
+    prefectures: ["福岡県"]
+
+  # 福岡博多グルメ！餃子のたっちゃん
+  - type: html
+    url: https://www.lepommier.work/entry/2024/08/08/%E7%A6%8F%E5%B2%A1%E5%8D%9A%E5%A4%9A%E3%82%B0%E3%83%AB%E3%83%A1%EF%BC%81%E9%A4%83%E5%AD%90%E3%81%AE%E3%81%9F%E3%81%A3%E3%81%A1%E3%82%83%E3%82%93%E3%83%BB%E8%82%89%E8%B1%86%E8%85%90%E3%81%AE%E9%A4%83
+    prefectures: ["福岡県"]
+
+  # 点心点 冷凍「黒豚焼餃子」テイクアウト（福岡）
+  - type: html
+    url: https://iggy.hateblo.jp/entry/tenshinten/menu
+    prefectures: ["福岡県"]
+
+  # -----------------------------------------------------------------------
+  # 京都府
+  # -----------------------------------------------------------------------
+
+  # 餃子の王将 1号店（京都）
+  - type: html
+    url: https://rocketnews24.com/2022/07/21/1658292/
+    prefectures: ["京都府"]
+
+  # -----------------------------------------------------------------------
+  # 広島県
+  # -----------------------------------------------------------------------
+
+  # 広島・尾道の餃子店（ホリエモン騒動後）
+  - type: html
+    url: https://www.nikkan-gendai.com/articles/view/life/296340
+    prefectures: ["広島県"]
