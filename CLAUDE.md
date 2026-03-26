@@ -78,7 +78,7 @@ CrawledDocument → ExtractedSnippet (+ prefecture_hint, text)
                → PrefectureScore   (+ dominant_label, label_scores, evidence_count)
 ```
 
-Condiment labels: `prepared_tare`, `self_mix_soy_vinegar`, `miso_dare`, `other_local_style`, `unknown`
+Condiment labels: `prepared_tare`, `self_mix_soy_vinegar`, `miso_dare`, `su_kosho`, `other_local_style`, `unknown`
 
 ### Key Libraries
 
@@ -92,7 +92,9 @@ Condiment labels: `prepared_tare`, `self_mix_soy_vinegar`, `miso_dare`, `other_l
 ## Development Phases
 
 - **Phase 1:** Focus prefectures — Tokyo, Osaka, Kanagawa, Hyogo; rule-based classifier (`classify/rule_classifier.py`)
-- **Phase 2:** Local LLM classifier (`classify/llm_classifier.py`, same `Classifier` interface)
+- **Phase 2:** Keyword dictionary expansion + negation handling in `classify/labels.py` and `rule_classifier.py`
+  - Expand `labels.py` keyword lists with paraphrase variants
+  - Add negation window detection: if a negation marker (「〜ではなく」「〜でなく」等) precedes a keyword within N characters, suppress that keyword hit
 - **Phase 3:** Nationwide expansion, Playwright sources
 
 ## Crawl Policy
@@ -103,6 +105,12 @@ Condiment labels: `prepared_tare`, `self_mix_soy_vinegar`, `miso_dare`, `other_l
 - No CAPTCHA bypass
 - Source priority: APIs > RSS > static HTML > Playwright
 
-## GPU (Phase 2)
+## Classifier Evaluation
 
-Uncomment the `deploy.resources` section in `docker-compose.yml` when GPU is needed for local LLM inference (16GB VRAM × 2).
+Run against the labeled test set in `tests/classifier_testset.yaml`:
+
+```bash
+docker compose run --rm app python scripts/evaluate_classifier.py --verbose
+```
+
+When adding keywords or negation rules, run this to verify no regressions.
