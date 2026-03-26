@@ -1454,3 +1454,22 @@ sources:
   - type: html
     url: https://www.tokyo-sports.co.jp/articles/-/248407
     prefectures: ["沖縄県"]
+
+  # -----------------------------------------------------------------------
+  # 手動追加（高品質・地域比較記事）
+  # -----------------------------------------------------------------------
+
+  # [307users] 西日本の民が東京の餃子に感じる「違和感」とは？（関西・東京のたれ文化比較）
+  - type: html
+    url: https://yomitai.jp/series/nishihigashi/inada-12/
+    prefectures: ["大阪府"]
+
+  # 宇都宮餃子 流れ着いた夜のスポット
+  - type: html
+    url: https://rocketnews24.com/2022/10/04/1694118/
+    prefectures: ["栃木県"]
+
+  # 宇都宮餃子 複数店食べ比べ
+  - type: html
+    url: https://www.kuckys.net/entry/2022/10/02/190120
+    prefectures: ["栃木県"]

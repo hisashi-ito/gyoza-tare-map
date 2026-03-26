@@ -94,7 +94,7 @@ sources:
 docker compose run --rm app python scripts/evaluate_classifier.py --verbose
 ```
 
-現在の評価結果（macro avg）：Precision 0.979 / Recall 0.981 / F1 0.979
+現在の評価結果（macro avg）：Precision 0.979 / Recall 0.981 / F1 0.979（40件テストセット）
 
 キーワードを追加・変更したら必ず実行してリグレッションがないか確認してください。
 
@@ -118,9 +118,27 @@ docker compose run --rm app python scripts/evaluate_classifier.py --verbose
 
 | フェーズ | 内容 | 状態 |
 |---------|------|------|
-| Phase 1 | ルールベース分類・はてなブックマーク検索でURL自動発見・4都府県フォーカス | ✅ 実装済み |
+| Phase 1 | ルールベース分類・はてなブックマーク検索でURL自動発見 | ✅ 実装済み |
 | Phase 2 | キーワード辞書の充実、否定表現対応（「〜ではなく」検出） | 着手中 |
 | Phase 3 | 全47都道府県展開、Playwright対応 | 未着手 |
+
+## 現在のカバレッジ（最終パイプライン実行結果）
+
+| 都道府県 | 主要ラベル | 証拠数 | 備考 |
+|---------|-----------|--------|------|
+| 兵庫県 | miso_dare | 52 | 神戸の味噌だれ文化を強く反映 |
+| 東京都 | prepared_tare | 42 | |
+| 栃木県 | prepared_tare | 42 | 宇都宮餃子が中心 |
+| 大阪府 | prepared_tare | 23 | |
+| 神奈川県 | prepared_tare | 18 | |
+| 宮崎県 | prepared_tare | 11 | 隠れた餃子大国 |
+| 福岡県 | prepared_tare | 7 | |
+| 埼玉県 | prepared_tare | 6 | |
+| 群馬県〜鹿児島県 | prepared_tare | 1〜5 | 証拠数少（low_evidence） |
+
+- カバー都道府県：**35 / 47**（seeds.yaml 248件から266文書取得・重複除去後255件）
+- 未カバー：12県（秋田・山梨・長野・三重・奈良・島根・香川・愛媛・高知・熊本・長野・福井）
+- 愛知県は1件のみ（名古屋の味噌だれ文化はWebコンテンツが少なく検索で捕捉困難）
 
 ## 必要環境
 
