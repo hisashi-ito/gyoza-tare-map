@@ -51,7 +51,7 @@ def build_map(
         name="gyoza-tare",
         data=df,
         columns=["prefecture", "label_code"],
-        key_on="feature.properties.N03_01",
+        key_on="feature.properties.nam_ja",
         fill_color="YlOrRd",
         fill_opacity=0.7,
         line_opacity=0.3,

@@ -1,12 +1,21 @@
 """Converts CrawledDocument → list[ExtractedSnippet]."""
 from __future__ import annotations
 
+import unicodedata
 from pathlib import Path
 
 from gyoza_tare_map.config import EXTRACTED_JSONL, RAW_JSONL
 from gyoza_tare_map.extract.html_extractor import extract_text
 from gyoza_tare_map.extract.region_detector import detect_prefecture
 from gyoza_tare_map.models import CrawledDocument, ExtractedSnippet
+
+# Gyoza relevance filter: article must contain at least one of these
+GYOZA_KEYWORDS = ["餃子", "ぎょうざ", "ギョーザ", "ギョウザ", "gyoza"]
+
+
+def _is_gyoza_relevant(text: str) -> bool:
+    normalized = unicodedata.normalize("NFKC", text)
+    return any(kw in normalized for kw in GYOZA_KEYWORDS)
 
 
 def build_snippet(doc: CrawledDocument, prefecture_hint: str = "") -> ExtractedSnippet | None:
@@ -16,6 +25,9 @@ def build_snippet(doc: CrawledDocument, prefecture_hint: str = "") -> ExtractedS
     """
     text = extract_text(doc.raw_html, url=doc.url)
     if not text:
+        return None
+
+    if not _is_gyoza_relevant(text):
         return None
 
     # Priority: caller hint > seed prefectures > auto-detect from text

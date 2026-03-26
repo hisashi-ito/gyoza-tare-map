@@ -3,8 +3,6 @@
 # source types:
 #   html       : 静的HTMLページ（記事・ブログ）
 #   rss        : RSSフィードURL（フィードを解析して各記事を取得）
-#   api        : JSON APIエンドポイント
-#   playwright : JavaScriptが必要なページ（要 playwright）
 #
 # prefectures: ヒントとなる都道府県名リスト。空なら本文から自動検出。
 #
@@ -15,37 +13,116 @@ sources:
 
   # -----------------------------------------------------------------------
   # 東京都
-  # 「餃子ランナー」— 餃子専門ブログ。RSS から最新記事を一括取得。
   # -----------------------------------------------------------------------
-  - type: rss
-    url: https://ichizo.hatenablog.com/feed
-    prefectures: ["東京都"]
 
-  # 大森の町中華「満福」の衝撃タレ流儀（酢ドバドバ）
+  # 大森の町中華「満福」— 酢をドバドバかける衝撃のタレ流儀
   - type: html
     url: https://ichizo.hatenablog.com/entry/omori-manpuku-gyoza-ryugi
     prefectures: ["東京都"]
 
+  # 餃子ランナー 2023年初訪問店ベスト10（東京の複数店舗タレ情報）
+  - type: html
+    url: https://ichizo.hatenablog.com/entry/2023Gyoza-shop-BEST10
+    prefectures: ["東京都"]
+
+  # 餃子ランナー 2024年初訪問店ベスト10
+  - type: html
+    url: https://ichizo.hatenablog.com/entry/2024Gyoza-shop-BEST10
+    prefectures: ["東京都"]
+
+  # 餃子とか焼売食べるときタレをつけない派の話
+  - type: html
+    url: https://ryota-ryota.hatenablog.com/entry/without-the-sauce
+    prefectures: ["東京都"]
+
+  # タモリレシピの餃子（酢醤油）
+  - type: html
+    url: https://tamosan-recipe.hatenablog.com/entry/gyouza
+    prefectures: ["東京都"]
+
+  # 中華食堂での酢・醤油・ラー油を混ぜて食べる体験
+  - type: html
+    url: https://a-jyanaika.hatenablog.com/entry/2024/07/01/000100
+    prefectures: ["東京都"]
+
+  # 水餃子のタレ論争ブログ
+  - type: html
+    url: http://gyouza2017.hatenablog.com/entry/2017/05/17/225041
+    prefectures: ["東京都"]
+
+  # 断腸亭料理日記（東京の老舗グルメブログ）— 蒸し餃子
+  - type: html
+    url: https://dancyotei.hatenablog.com/entry/2022/10/12/120121
+    prefectures: ["東京都"]
+
   # -----------------------------------------------------------------------
   # 大阪府 / 関西
-  # ぎょうざの満洲の関西店舗には「餃子のたれ」があった
   # -----------------------------------------------------------------------
+
+  # ぎょうざの満洲の関西店舗には「餃子のたれ」があった（prepared_tare）
   - type: html
     url: https://kyotosan.hatenablog.com/entry/2017/08/29/200402
     prefectures: ["大阪府"]
 
+  # 大阪王将 羽根つき餃子 リニューアル食べ比べ（タレ付き評価）
+  - type: html
+    url: https://rinsh.hatenablog.com/entry/reitou240322
+    prefectures: ["大阪府"]
+
+  # 大阪・叶笑 餃子とだし巻き玉子（大阪の有名餃子店）
+  - type: html
+    url: https://rei7.hatenablog.com/entry/2024/07/20/031344
+    prefectures: ["大阪府"]
+
+  # 空飛ぶコブタのひとりごと — 大阪の巨大餃子レポート
+  - type: html
+    url: https://sorabuta.hatenablog.com/entry/2024/07/13/174717
+    prefectures: ["大阪府"]
+
+  # 餃子の王将と大阪王将の違い記事（大阪王将のタレに言及）
+  - type: html
+    url: https://omosirokinaki.hatenablog.com/entry/%E9%A4%83%E5%AD%90%E3%81%AE%E7%8E%8B%E5%B0%86%E5%A4%A7%E9%98%AA%E7%8E%8B%E5%B0%86
+    prefectures: ["大阪府"]
+
   # -----------------------------------------------------------------------
   # 神奈川県
-  # 横浜中華街「山東2号店」の餃子レポート
   # -----------------------------------------------------------------------
+
+  # 横浜とんとん（星川駅）— タレなしが美味しいという評価
+  - type: html
+    url: https://manaki-hislog.hatenablog.com/entry/2025/09/24/170000
+    prefectures: ["神奈川県"]
+
+  # 横浜中華街 山東2号店
   - type: html
     url: https://okuradesu.hatenablog.com/entry/2019/12/29/120500
     prefectures: ["神奈川県"]
 
+  # 横浜中華街 山東（別ブログからの訪問記）
+  - type: html
+    url: https://2hokkaido.hatenablog.com/entry/2020/01/03/063000
+    prefectures: ["神奈川県"]
+
+  # temahime's blog — 羽根つき餃子（神奈川）
+  - type: html
+    url: https://temahime.hatenablog.com/entry/2021/03/28/165927
+    prefectures: ["神奈川県"]
+
   # -----------------------------------------------------------------------
   # 兵庫県（神戸）
-  # 「神戸の餃子は味噌だれで食べます」— miso_dare ラベルの典型例
   # -----------------------------------------------------------------------
+
+  # 「神戸の餃子は味噌だれで食べます」— miso_dare の典型例
   - type: html
     url: https://kasagokawahagi.hatenablog.com/entry/2023/08/31/180028
+    prefectures: ["兵庫県"]
+
+  # 神戸味噌だれ餃子専門店イチローの公式ブログ（中国と日本の食べ方比較）
+  - type: html
+    url: https://gyoza-16.hatenablog.com/entry/2024/12/19/171959
+    prefectures: ["兵庫県"]
+
+  # 神戸味噌だれ餃子専門店イチロー RSS（神戸のたれ文化を継続取得）
+  - type: rss
+    url: https://gyoza-16.hatenablog.com/feed
     prefectures: ["兵庫県"]
