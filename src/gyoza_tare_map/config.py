@@ -26,6 +26,7 @@ LABELS = [
     "prepared_tare",
     "self_mix_soy_vinegar",
     "miso_dare",
+    "su_kosho",
     "other_local_style",
     "unknown",
 ]

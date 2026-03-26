@@ -9,6 +9,7 @@ services:
       # Mount source for development (live reload without rebuild)
       - ./src:/app/src
       - ./scripts:/app/scripts
+      - ./tests:/app/tests
     environment:
       - PYTHONUNBUFFERED=1
     # GPU support (Phase 2: local LLM inference)

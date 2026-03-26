@@ -72,6 +72,22 @@ MISO_DARE: list[str] = [
 ]
 
 # ---------------------------------------------------------------------------
+# su_kosho: vinegar + pepper (black/white pepper sprinkled with vinegar)
+# ---------------------------------------------------------------------------
+SU_KOSHO: list[str] = [
+    "酢コショウ",
+    "酢こしょう",
+    "酢胡椒",
+    "酢とコショウ",
+    "酢と胡椒",
+    "酢とこしょう",
+    "コショウと酢",
+    "胡椒と酢",
+    "酢をかけてコショウ",
+    "酢コショ",
+]
+
+# ---------------------------------------------------------------------------
 # other_local_style: regional variants not covered by the above
 # ---------------------------------------------------------------------------
 OTHER_LOCAL_STYLE: list[str] = [
@@ -99,5 +115,6 @@ LABEL_KEYWORDS: dict[str, list[str]] = {
     "prepared_tare": PREPARED_TARE,
     "self_mix_soy_vinegar": SELF_MIX_SOY_VINEGAR,
     "miso_dare": MISO_DARE,
+    "su_kosho": SU_KOSHO,
     "other_local_style": OTHER_LOCAL_STYLE,
 }

@@ -13,6 +13,7 @@
 | `prepared_tare` | 付属・特製タレ（店が用意したたれ） |
 | `self_mix_soy_vinegar` | 酢醤油の自作（卓上で自分で割る） |
 | `miso_dare` | 味噌だれ |
+| `su_kosho` | 酢コショウ（酢に胡椒をふる食べ方） |
 | `other_local_style` | その他地域スタイル（マヨ・ゆずこしょう等） |
 | `unknown` | 該当なし・信頼度不足 |
 

@@ -13,6 +13,7 @@ LABEL_COLORS: dict[str, str] = {
     "prepared_tare": "#e74c3c",       # red
     "self_mix_soy_vinegar": "#3498db", # blue
     "miso_dare": "#e67e22",            # orange
+    "su_kosho": "#9b59b6",             # purple
     "other_local_style": "#2ecc71",    # green
     "unknown": "#bdc3c7",              # grey
 }
@@ -21,6 +22,7 @@ LABEL_NAMES_JA: dict[str, str] = {
     "prepared_tare": "付属タレ",
     "self_mix_soy_vinegar": "酢醤油（自作）",
     "miso_dare": "味噌だれ",
+    "su_kosho": "酢コショウ",
     "other_local_style": "その他",
     "unknown": "不明",
 }
