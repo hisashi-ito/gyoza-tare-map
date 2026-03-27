@@ -119,7 +119,7 @@ The analogy is Abraham Wald's famous WWII analysis of aircraft damage. The Allie
 
 In the same way, what this map actually measures is **the noteworthiness of a region's condiment culture**, not its prevalence. `miso_dare` appearing strongly in Hyogo is credible precisely because Kobe-style miso sauce *is* a recognised regional departure. `prepared_tare` dominating everywhere else may reflect nothing more than the fact that house tare is the default expectation — visible in the data only because the name still appears in reviews, not because it is culturally distinctive.
 
-**Practical implication:** to detect default behaviours, a complementary corpus of recipe sites, home-cooking blogs, and frozen-gyoza brand pages would be needed — sources where the author's baseline assumption is domestic preparation rather than restaurant discovery.
+**Practical implication:** adding more web sources would not resolve this bias — it would only compound it. Any corpus built from voluntary text production will systematically silence the unremarkable. To measure default behaviours, one would need data that does not depend on someone choosing to write: surveys, point-of-sale records, or direct observation. This pipeline measures *what people find worth saying about gyoza*, which is a different question entirely.
 
 ---
 
