@@ -87,6 +87,8 @@ sources:
 
 Pipeline results as of the last run (38 / 47 prefectures):
 
+![Gyoza Tare Map](docs/map_screenshot.png)
+
 | Prefecture | Label | Evidence | Notes |
 |------------|-------|----------|-------|
 | 兵庫県 (Hyogo) | `miso_dare` | 52 | Kobe's miso-sauce culture dominates |
