@@ -1502,3 +1502,27 @@ sources:
   - type: html
     url: https://www.shikoku-np.co.jp/feature/gyoza/
     prefectures: ["香川県"]
+
+  # -----------------------------------------------------------------------
+  # Phase 3 Playwright クロール対象（JSレンダリング必要なサイト）
+  # -----------------------------------------------------------------------
+
+  # 宮崎市が史上初の餃子日本一！勝因と餃子文化（nippon.com）
+  - type: html
+    url: https://www.nippon.com/ja/japan-topics/g02104/
+    prefectures: ["宮崎県"]
+
+  # 甲府「餃子会館」— 山梨の老舗餃子店
+  - type: html
+    url: https://magurokunn.hatenadiary.jp/entry/2026/02/08/060000
+    prefectures: ["山梨県"]
+
+  # 高知駅前の王将セットメニュー（高知の餃子事情）
+  - type: html
+    url: https://togetter.com/li/1748794
+    prefectures: ["高知県"]
+
+  # 宇部の餃子専門店「穂満」— 山口県の餃子文化
+  - type: playwright
+    url: https://gyoza-homan.com/
+    prefectures: ["山口県"]
