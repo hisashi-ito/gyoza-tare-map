@@ -1,6 +1,6 @@
 # gyoza-tare-map 🥟
 
-> *How does Japan dip its dumplings?*
+> *How does Japan dip its gyoza (dumplings)?*
 
 A data pipeline that automatically discovers, crawls, classifies, and visualizes **regional gyoza condiment culture** across Japan — powered entirely by public web data, zero APIs required.
 
@@ -8,7 +8,7 @@ A data pipeline that automatically discovers, crawls, classifies, and visualizes
 
 ## The Idea
 
-Gyoza (Japanese dumplings) are eaten everywhere in Japan, but *how* people dip them varies dramatically by region. In Kobe, miso-based sauce is the norm. In Tokyo, a self-mixed soy-vinegar blend is common. Some places use vinegar with black pepper. Others don't dip at all.
+Gyoza (Japanese dumplings) are eaten everywhere in Japan, but *how* people dip them varies dramatically by region. In Kobe, miso-based sauce is the norm. In Tokyo, a self-mixed soy-vinegar blend is typical. Some places use vinegar with black pepper. Some restaurants even recommend eating them plain, without any dipping sauce.
 
 This project maps those regional differences by mining Japanese food blogs and news articles, classifying each article's condiment style, and rendering the result as an interactive choropleth map.
 
@@ -21,16 +21,22 @@ This project maps those regional differences by mining Japanese food blogs and n
 | `prepared_tare` | Pre-made bottled sauce served by the restaurant |
 | `self_mix_soy_vinegar` | DIY soy sauce + vinegar blend at the table |
 | `miso_dare` | Miso-based dipping sauce |
-| `su_kosho` | Vinegar + black pepper (no soy) |
-| `other_local_style` | Regional variants — mayo, yuzu pepper, sesame, etc. |
+| `su_kosho` | Vinegar + black pepper |
+| `other_local_style` | Regional variants — yuzu pepper, sesame, etc. |
 | `unknown` | No condiment signal detected |
 
 ---
 
 ## Pipeline
 
-```
-Discover ──► seeds.yaml ──► Crawl ──► Extract ──► Classify ──► Aggregate ──► Visualize
+```mermaid
+flowchart LR
+    A[Discover] --> B[(seeds.yaml)]
+    B --> C[Crawl]
+    C --> D[Extract]
+    D --> E[Classify]
+    E --> F[Aggregate]
+    F --> G[Visualize]
 ```
 
 | Stage | What it does |

@@ -167,12 +167,12 @@ a:hover { text-decoration: underline; }
   </div>
   <h1 id="gyoza-tare-map">gyoza-tare-map 🥟</h1>
 <blockquote>
-<p><em>How does Japan dip its dumplings?</em></p>
+<p><em>How does Japan dip its gyoza (dumplings)?</em></p>
 </blockquote>
 <p>A data pipeline that automatically discovers, crawls, classifies, and visualizes <strong>regional gyoza condiment culture</strong> across Japan — powered entirely by public web data, zero APIs required.</p>
 <hr />
 <h2 id="the-idea">The Idea</h2>
-<p>Gyoza (Japanese dumplings) are eaten everywhere in Japan, but <em>how</em> people dip them varies dramatically by region. In Kobe, miso-based sauce is the norm. In Tokyo, a self-mixed soy-vinegar blend is common. Some places use vinegar with black pepper. Others don't dip at all.</p>
+<p>Gyoza (Japanese dumplings) are eaten everywhere in Japan, but <em>how</em> people dip them varies dramatically by region. In Kobe, miso-based sauce is the norm. In Tokyo, a self-mixed soy-vinegar blend is typical. Some places use vinegar with black pepper. Some restaurants even recommend eating them plain, without any dipping sauce.</p>
 <p>This project maps those regional differences by mining Japanese food blogs and news articles, classifying each article's condiment style, and rendering the result as an interactive choropleth map.</p>
 <hr />
 <h2 id="condiment-labels">Condiment Labels</h2>
@@ -198,11 +198,11 @@ a:hover { text-decoration: underline; }
 </tr>
 <tr>
 <td><code>su_kosho</code></td>
-<td>Vinegar + black pepper (no soy)</td>
+<td>Vinegar + black pepper</td>
 </tr>
 <tr>
 <td><code>other_local_style</code></td>
-<td>Regional variants — mayo, yuzu pepper, sesame, etc.</td>
+<td>Regional variants — yuzu pepper, sesame, etc.</td>
 </tr>
 <tr>
 <td><code>unknown</code></td>
@@ -212,7 +212,13 @@ a:hover { text-decoration: underline; }
 </table>
 <hr />
 <h2 id="pipeline">Pipeline</h2>
-<pre><code>Discover ──► seeds.yaml ──► Crawl ──► Extract ──► Classify ──► Aggregate ──► Visualize
+<pre><code class="language-mermaid">flowchart LR
+    A[Discover] --&gt; B[(seeds.yaml)]
+    B --&gt; C[Crawl]
+    C --&gt; D[Extract]
+    D --&gt; E[Classify]
+    E --&gt; F[Aggregate]
+    F --&gt; G[Visualize]
 </code></pre>
 <table>
 <thead>
@@ -355,7 +361,7 @@ sources:
 <p>The near-absence of <code>self_mix_soy_vinegar</code> in the results is not evidence that Japanese people rarely mix their own soy-vinegar dip. It is evidence of the opposite: the practice is so unremarkable that no one writes about it.</p>
 <p>This pipeline mines food blogs and bookmark-aggregated articles — a corpus dominated by <em>novelty and recommendation</em>. A blogger will note "this place serves a house-made miso tare!" precisely because it departs from expectation. The mundane default — grabbing the bottle of vinegar and the bottle of soy sauce already on every table — generates no text signal at all.</p>
 <p>The analogy is Abraham Wald's famous WWII analysis of aircraft damage. The Allied forces observed bullet holes concentrated on the wings and fuselage of returning planes and proposed reinforcing those areas. Wald pointed out the flaw: <em>the planes that were shot in the engines never came back</em>. The absence of engine damage in the sample was the strongest possible evidence that engines were the critical vulnerability.</p>
-<p><img src="https://substackcdn.com/image/fetch/$s_!b9mw!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fbucketeer-e05bbc84-baa3-437e-9518-adb32be77984.s3.amazonaws.com%2Fpublic%2Fimages%2F606f8cdf-3899-4311-b46d-b7e6c2eac8bf_962x610.png" alt="Wald's aircraft damage diagram" width="800"></p>
+<p><img src="https://substackcdn.com/image/fetch/$s_!b9mw!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fbucketeer-e05bbc84-baa3-437e-9518-adb32be77984.s3.amazonaws.com%2Fpublic%2Fimages%2F606f8cdf-3899-4311-b46d-b7e6c2eac8bf_962x610.png" alt="Wald's aircraft damage diagram" width="600"></p>
 <p><em>Source: <a href="https://www.privatdozent.co/p/the-legend-of-abraham-wald">The Legend of Abraham Wald</a>, Privatdozent</em></p>
 <p>In the same way, what this map actually measures is <strong>the noteworthiness of a region's condiment culture</strong>, not its prevalence. <code>miso_dare</code> appearing strongly in Hyogo is credible precisely because Kobe-style miso sauce <em>is</em> a recognised regional departure. <code>prepared_tare</code> dominating everywhere else may reflect nothing more than the fact that house tare is the default expectation — visible in the data only because the name still appears in reviews, not because it is culturally distinctive.</p>
 <p><strong>Practical implication:</strong> adding more web sources would not resolve this bias — it would only compound it. Any corpus built from voluntary text production will systematically silence the unremarkable. To measure default behaviours, one would need data that does not depend on someone choosing to write: surveys, point-of-sale records, or direct observation. This pipeline measures <em>what people find worth saying about gyoza</em>, which is a different question entirely.</p>
