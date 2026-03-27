@@ -16,6 +16,7 @@ from gyoza_tare_map.crawl.cache import ResponseCache
 from gyoza_tare_map.crawl.policy import RateLimiter, RobotsCache
 from gyoza_tare_map.crawl.sources.base import SeedEntry
 from gyoza_tare_map.crawl.sources.httpx_source import HttpxSource
+from gyoza_tare_map.crawl.sources.playwright_source import PlaywrightSource
 from gyoza_tare_map.crawl.sources.rss_source import RssSource
 from gyoza_tare_map.models import CrawledDocument
 
@@ -57,11 +58,14 @@ async def run(
 
     html_source = HttpxSource(robots, limiter, cache)
     rss_source = RssSource(robots, limiter, cache)
+    playwright_source = PlaywrightSource(robots, limiter)
 
     async def process(seed: SeedEntry) -> list[CrawledDocument]:
         async with semaphore:
             if seed.source_type == "rss":
                 return await rss_source.fetch(seed)
+            elif seed.source_type == "playwright":
+                return await playwright_source.fetch(seed)
             else:
                 return await html_source.fetch(seed)
 

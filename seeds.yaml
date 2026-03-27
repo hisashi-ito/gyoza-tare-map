@@ -1473,3 +1473,32 @@ sources:
   - type: html
     url: https://www.kuckys.net/entry/2022/10/02/190120
     prefectures: ["栃木県"]
+
+  # -----------------------------------------------------------------------
+  # Phase 3 手動追加（未カバー県）
+  # -----------------------------------------------------------------------
+
+  # 山梨県（甲府餃子 — 消費量全国上位）
+  - type: html
+    url: https://www.hotpepper.jp/mesitsu/entry/noriki-pressman/2023-00149
+    prefectures: ["山梨県"]
+
+  # 山口県（宇部餃子 — ニラ多め・独特の食べ方）
+  - type: html
+    url: https://www.enjoyfukuoka.com/gourmet/37531/
+    prefectures: ["山口県"]
+
+  # 熊本県（熊本餃子文化）
+  - type: html
+    url: https://kumamoto-guide.jp/spots/detail/1085
+    prefectures: ["熊本県"]
+
+  # 長野県（信州餃子 — 野沢菜入り等）
+  - type: html
+    url: https://www.shinshu-live.com/feature/cuisine/gyoza/
+    prefectures: ["長野県"]
+
+  # 香川県（さぬき餃子）
+  - type: html
+    url: https://www.shikoku-np.co.jp/feature/gyoza/
+    prefectures: ["香川県"]
