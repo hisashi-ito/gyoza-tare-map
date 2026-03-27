@@ -105,6 +105,24 @@ Pipeline results as of the last run (38 / 47 prefectures):
 
 ---
 
+## A Note on Survivorship Bias
+
+The near-absence of `self_mix_soy_vinegar` in the results is not evidence that Japanese people rarely mix their own soy-vinegar dip. It is evidence of the opposite: the practice is so unremarkable that no one writes about it.
+
+This pipeline mines food blogs and bookmark-aggregated articles — a corpus dominated by *novelty and recommendation*. A blogger will note "this place serves a house-made miso tare!" precisely because it departs from expectation. The mundane default — grabbing the bottle of vinegar and the bottle of soy sauce already on every table — generates no text signal at all.
+
+The analogy is Abraham Wald's famous WWII analysis of aircraft damage. The Allied forces observed bullet holes concentrated on the wings and fuselage of returning planes and proposed reinforcing those areas. Wald pointed out the flaw: *the planes that were shot in the engines never came back*. The absence of engine damage in the sample was the strongest possible evidence that engines were the critical vulnerability.
+
+![Wald's aircraft damage diagram](https://substackcdn.com/image/fetch/$s_!b9mw!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fbucketeer-e05bbc84-baa3-437e-9518-adb32be77984.s3.amazonaws.com%2Fpublic%2Fimages%2F606f8cdf-3899-4311-b46d-b7e6c2eac8bf_962x610.png)
+
+*Source: [The Legend of Abraham Wald](https://www.privatdozent.co/p/the-legend-of-abraham-wald), Privatdozent*
+
+In the same way, what this map actually measures is **the noteworthiness of a region's condiment culture**, not its prevalence. `miso_dare` appearing strongly in Hyogo is credible precisely because Kobe-style miso sauce *is* a recognised regional departure. `prepared_tare` dominating everywhere else may reflect nothing more than the fact that house tare is the default expectation — visible in the data only because the name still appears in reviews, not because it is culturally distinctive.
+
+**Practical implication:** to detect default behaviours, a complementary corpus of recipe sites, home-cooking blogs, and frozen-gyoza brand pages would be needed — sources where the author's baseline assumption is domestic preparation rather than restaurant discovery.
+
+---
+
 ## Classifier Evaluation
 
 Evaluated against a manually labeled test set (`tests/classifier_testset.yaml`, 40 cases):

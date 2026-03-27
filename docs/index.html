@@ -351,6 +351,15 @@ sources:
 </table>
 <p>9 prefectures remain uncovered — gyoza tare content is simply sparse online for those regions.</p>
 <hr />
+<h2 id="a-note-on-survivorship-bias">A Note on Survivorship Bias</h2>
+<p>The near-absence of <code>self_mix_soy_vinegar</code> in the results is not evidence that Japanese people rarely mix their own soy-vinegar dip. It is evidence of the opposite: the practice is so unremarkable that no one writes about it.</p>
+<p>This pipeline mines food blogs and bookmark-aggregated articles — a corpus dominated by <em>novelty and recommendation</em>. A blogger will note "this place serves a house-made miso tare!" precisely because it departs from expectation. The mundane default — grabbing the bottle of vinegar and the bottle of soy sauce already on every table — generates no text signal at all.</p>
+<p>The analogy is Abraham Wald's famous WWII analysis of aircraft damage. The Allied forces observed bullet holes concentrated on the wings and fuselage of returning planes and proposed reinforcing those areas. Wald pointed out the flaw: <em>the planes that were shot in the engines never came back</em>. The absence of engine damage in the sample was the strongest possible evidence that engines were the critical vulnerability.</p>
+<p><img alt="Wald's aircraft damage diagram" src="https://substackcdn.com/image/fetch/$s_!b9mw!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fbucketeer-e05bbc84-baa3-437e-9518-adb32be77984.s3.amazonaws.com%2Fpublic%2Fimages%2F606f8cdf-3899-4311-b46d-b7e6c2eac8bf_962x610.png" /></p>
+<p><em>Source: <a href="https://www.privatdozent.co/p/the-legend-of-abraham-wald">The Legend of Abraham Wald</a>, Privatdozent</em></p>
+<p>In the same way, what this map actually measures is <strong>the noteworthiness of a region's condiment culture</strong>, not its prevalence. <code>miso_dare</code> appearing strongly in Hyogo is credible precisely because Kobe-style miso sauce <em>is</em> a recognised regional departure. <code>prepared_tare</code> dominating everywhere else may reflect nothing more than the fact that house tare is the default expectation — visible in the data only because the name still appears in reviews, not because it is culturally distinctive.</p>
+<p><strong>Practical implication:</strong> to detect default behaviours, a complementary corpus of recipe sites, home-cooking blogs, and frozen-gyoza brand pages would be needed — sources where the author's baseline assumption is domestic preparation rather than restaurant discovery.</p>
+<hr />
 <h2 id="classifier-evaluation">Classifier Evaluation</h2>
 <p>Evaluated against a manually labeled test set (<code>tests/classifier_testset.yaml</code>, 40 cases):</p>
 <pre><code>label                     precision    recall        f1  support
