@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>gyoza-tare-map</title>
+  <style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+  background: #0d1117;
+  color: #e6edf3;
+  line-height: 1.7;
+  padding: 2rem 1rem 4rem;
+}
+
+.container {
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+/* Header accent */
+h1 {
+  font-size: 2.4rem;
+  font-weight: 800;
+  background: linear-gradient(90deg, #f97316, #ec4899, #8b5cf6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 0.4rem;
+}
+
+h2 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #58a6ff;
+  margin: 2.4rem 0 0.8rem;
+  padding-bottom: 0.3rem;
+  border-bottom: 1px solid #21262d;
+}
+
+h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #79c0ff;
+  margin: 1.6rem 0 0.5rem;
+}
+
+p { margin: 0.6rem 0; color: #c9d1d9; }
+
+blockquote {
+  border-left: 3px solid #f97316;
+  padding: 0.4rem 1rem;
+  margin: 0.8rem 0;
+  color: #8b949e;
+  font-style: italic;
+}
+
+/* Tables */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0;
+  font-size: 0.9rem;
+}
+
+th {
+  background: #161b22;
+  color: #8b949e;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  padding: 0.6rem 0.8rem;
+  text-align: left;
+  border-bottom: 1px solid #21262d;
+}
+
+td {
+  padding: 0.55rem 0.8rem;
+  border-bottom: 1px solid #161b22;
+  color: #c9d1d9;
+}
+
+tr:hover td { background: #161b22; }
+
+/* Code */
+code {
+  font-family: "SF Mono", "Fira Code", "Cascadia Code", monospace;
+  font-size: 0.85em;
+  background: #161b22;
+  color: #f97316;
+  padding: 0.15em 0.4em;
+  border-radius: 4px;
+  border: 1px solid #21262d;
+}
+
+pre {
+  background: #161b22;
+  border: 1px solid #21262d;
+  border-radius: 8px;
+  padding: 1.1rem 1.2rem;
+  overflow-x: auto;
+  margin: 1rem 0;
+  line-height: 1.55;
+}
+
+pre code {
+  background: none;
+  border: none;
+  padding: 0;
+  color: #c9d1d9;
+  font-size: 0.88rem;
+}
+
+/* Pipeline diagram */
+pre:has(code:first-child:not([class])) {
+  border-left: 3px solid #8b5cf6;
+}
+
+/* HR */
+hr {
+  border: none;
+  border-top: 1px solid #21262d;
+  margin: 2rem 0;
+}
+
+/* Lists */
+ul, ol { padding-left: 1.4rem; margin: 0.5rem 0; color: #c9d1d9; }
+li { margin: 0.25rem 0; }
+
+/* Badge strip at the top */
+.meta {
+  font-size: 0.78rem;
+  color: #484f58;
+  margin-top: 0.5rem;
+  margin-bottom: 2rem;
+}
+
+.badge {
+  display: inline-block;
+  background: #21262d;
+  border: 1px solid #30363d;
+  border-radius: 20px;
+  padding: 2px 10px;
+  font-size: 0.75rem;
+  color: #8b949e;
+  margin-right: 6px;
+}
+
+.badge.green { border-color: #238636; color: #3fb950; }
+.badge.orange { border-color: #9e6a03; color: #d29922; }
+.badge.purple { border-color: #6e40c9; color: #a371f7; }
+
+a { color: #58a6ff; text-decoration: none; }
+a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="meta">
+    <span class="badge green">38 / 47 prefectures</span>
+    <span class="badge orange">Phase 3 in progress</span>
+    <span class="badge purple">MIT License</span>
+    <span style="margin-left:8px">Snapshot: 2026-03-27</span>
+  </div>
+  <h1 id="gyoza-tare-map">gyoza-tare-map 🥟</h1>
+<blockquote>
+<p><em>How does Japan dip its dumplings?</em></p>
+</blockquote>
+<p>A data pipeline that automatically discovers, crawls, classifies, and visualizes <strong>regional gyoza condiment culture</strong> across Japan — powered entirely by public web data, zero APIs required.</p>
+<hr />
+<h2 id="the-idea">The Idea</h2>
+<p>Gyoza (Japanese dumplings) are eaten everywhere in Japan, but <em>how</em> people dip them varies dramatically by region. In Kobe, miso-based sauce is the norm. In Tokyo, a self-mixed soy-vinegar blend is common. Some places use vinegar with black pepper. Others don't dip at all.</p>
+<p>This project maps those regional differences by mining Japanese food blogs and news articles, classifying each article's condiment style, and rendering the result as an interactive choropleth map.</p>
+<hr />
+<h2 id="condiment-labels">Condiment Labels</h2>
+<table>
+<thead>
+<tr>
+<th>Label</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>prepared_tare</code></td>
+<td>Pre-made bottled sauce served by the restaurant</td>
+</tr>
+<tr>
+<td><code>self_mix_soy_vinegar</code></td>
+<td>DIY soy sauce + vinegar blend at the table</td>
+</tr>
+<tr>
+<td><code>miso_dare</code></td>
+<td>Miso-based dipping sauce</td>
+</tr>
+<tr>
+<td><code>su_kosho</code></td>
+<td>Vinegar + black pepper (no soy)</td>
+</tr>
+<tr>
+<td><code>other_local_style</code></td>
+<td>Regional variants — mayo, yuzu pepper, sesame, etc.</td>
+</tr>
+<tr>
+<td><code>unknown</code></td>
+<td>No condiment signal detected</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="pipeline">Pipeline</h2>
+<pre><code>Discover ──► seeds.yaml ──► Crawl ──► Extract ──► Classify ──► Aggregate ──► Visualize
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Stage</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Discover</strong></td>
+<td>Queries はてなブックマーク search RSS (free, no API key) to find gyoza-related URLs per prefecture</td>
+</tr>
+<tr>
+<td><strong>Crawl</strong></td>
+<td>Fetches HTML/RSS/JS pages; respects <code>robots.txt</code>, enforces 3 s/domain rate limit, caches in SQLite</td>
+</tr>
+<tr>
+<td><strong>Extract</strong></td>
+<td>Strips boilerplate with trafilatura; detects prefecture from text; filters non-gyoza articles</td>
+</tr>
+<tr>
+<td><strong>Classify</strong></td>
+<td>Keyword-count rule classifier with NFKC normalization; confidence-weighted scoring</td>
+</tr>
+<tr>
+<td><strong>Aggregate</strong></td>
+<td>Confidence-weighted label votes per prefecture; flags low-evidence prefectures (&lt; 5 records)</td>
+</tr>
+<tr>
+<td><strong>Visualize</strong></td>
+<td>Interactive folium choropleth map saved to <code>outputs/map.html</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="quick-start">Quick Start</h2>
+<pre><code class="language-bash"># One-time setup
+docker compose run --rm app python scripts/fetch_geodata.py
+docker compose run --rm app python scripts/discover_seeds.py --all-prefectures --auto-append
+
+# Run the full pipeline
+docker compose up app
+
+# Re-aggregate without re-crawling
+docker compose run --rm app python scripts/run_pipeline.py --skip-crawl
+
+# Dry run (no file writes)
+docker compose run --rm app python scripts/run_pipeline.py --dry-run
+</code></pre>
+<h3 id="adding-crawl-targets">Adding Crawl Targets</h3>
+<p><code>discover_seeds.py</code> handles this automatically, but manual entries are welcome:</p>
+<pre><code class="language-yaml"># seeds.yaml
+sources:
+  - type: rss
+    url: https://example.com/feed
+    prefectures: []             # empty = auto-detect from text
+
+  - type: html
+    url: https://example.com/article
+    prefectures: [&quot;大阪府&quot;]
+
+  - type: playwright            # for JavaScript-heavy pages
+    url: https://example.com/spa
+    prefectures: [&quot;兵庫県&quot;]
+</code></pre>
+<hr />
+<h2 id="current-coverage">Current Coverage</h2>
+<p>Pipeline results as of the last run (38 / 47 prefectures):</p>
+<table>
+<thead>
+<tr>
+<th>Prefecture</th>
+<th>Label</th>
+<th>Evidence</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>兵庫県 (Hyogo)</td>
+<td><code>miso_dare</code></td>
+<td>52</td>
+<td>Kobe's miso-sauce culture dominates</td>
+</tr>
+<tr>
+<td>東京都 (Tokyo)</td>
+<td><code>prepared_tare</code></td>
+<td>42</td>
+<td></td>
+</tr>
+<tr>
+<td>栃木県 (Tochigi)</td>
+<td><code>prepared_tare</code></td>
+<td>42</td>
+<td>Utsunomiya gyoza capital</td>
+</tr>
+<tr>
+<td>大阪府 (Osaka)</td>
+<td><code>prepared_tare</code></td>
+<td>23</td>
+<td></td>
+</tr>
+<tr>
+<td>神奈川県 (Kanagawa)</td>
+<td><code>prepared_tare</code></td>
+<td>18</td>
+<td></td>
+</tr>
+<tr>
+<td>宮崎県 (Miyazaki)</td>
+<td><code>prepared_tare</code></td>
+<td>11</td>
+<td>Surprise #1 gyoza city</td>
+</tr>
+<tr>
+<td>福岡県 (Fukuoka)</td>
+<td><code>prepared_tare</code></td>
+<td>7</td>
+<td></td>
+</tr>
+<tr>
+<td>埼玉県 (Saitama)</td>
+<td><code>prepared_tare</code></td>
+<td>6</td>
+<td></td>
+</tr>
+<tr>
+<td>群馬県〜鹿児島県</td>
+<td><code>prepared_tare</code></td>
+<td>1–5</td>
+<td>Low evidence</td>
+</tr>
+</tbody>
+</table>
+<p>9 prefectures remain uncovered — gyoza tare content is simply sparse online for those regions.</p>
+<hr />
+<h2 id="classifier-evaluation">Classifier Evaluation</h2>
+<p>Evaluated against a manually labeled test set (<code>tests/classifier_testset.yaml</code>, 40 cases):</p>
+<pre><code>label                     precision    recall        f1  support
+----------------------------------------------------------------
+prepared_tare                 1.000     1.000     1.000        7
+self_mix_soy_vinegar          0.875     1.000     0.933        7
+miso_dare                     1.000     1.000     1.000        6
+su_kosho                      1.000     1.000     1.000        5
+other_local_style             1.000     1.000     1.000        6
+unknown                       1.000     0.889     0.941        9
+----------------------------------------------------------------
+macro avg                     0.979     0.981     0.979       40
+
+Accuracy: 39/40 = 0.975
+</code></pre>
+<pre><code class="language-bash">docker compose run --rm app python scripts/evaluate_classifier.py --verbose
+</code></pre>
+<hr />
+<h2 id="tech-stack">Tech Stack</h2>
+<table>
+<thead>
+<tr>
+<th>Layer</th>
+<th>Libraries</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Crawling</td>
+<td><code>httpx</code>, <code>feedparser</code>, <code>playwright</code></td>
+</tr>
+<tr>
+<td>Text extraction</td>
+<td><code>trafilatura</code></td>
+</tr>
+<tr>
+<td>Data</td>
+<td><code>pandas</code>, <code>pyarrow</code></td>
+</tr>
+<tr>
+<td>Geo / Map</td>
+<td><code>geopandas</code>, <code>folium</code></td>
+</tr>
+<tr>
+<td>Search</td>
+<td>はてなブックマーク RSS (no API key)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="roadmap">Roadmap</h2>
+<table>
+<thead>
+<tr>
+<th>Phase</th>
+<th>Goal</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Rule-based classifier, 4-prefecture focus, はてなブックマーク seed discovery</td>
+<td>✅ Done</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Keyword dictionary expansion, negation handling</td>
+<td>🚧 In progress</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Full 47-prefecture coverage, Playwright for JS-heavy sites</td>
+<td>🚧 In progress (38/47)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="license">License</h2>
+<p>MIT</p>
+</div>
+</body>
+</html>

@@ -1,149 +1,155 @@
-# gyoza-tare-map
+# gyoza-tare-map 🥟
 
-日本全国の餃子のたれ文化を、ウェブ上の公開データから推定・可視化するデータパイプラインです。
+> *How does Japan dip its dumplings?*
 
-## 概要
+A data pipeline that automatically discovers, crawls, classifies, and visualizes **regional gyoza condiment culture** across Japan — powered entirely by public web data, zero APIs required.
 
-ブログ記事・グルメサイト等のテキストから「餃子をどんなたれで食べるか」を都道府県ごとに集計し、インタラクティブな地図として出力します。
+---
 
-### たれラベル
+## The Idea
 
-| ラベル | 説明 |
-|--------|------|
-| `prepared_tare` | 付属・特製タレ（店が用意したたれ） |
-| `self_mix_soy_vinegar` | 酢醤油の自作（卓上で自分で割る） |
-| `miso_dare` | 味噌だれ |
-| `su_kosho` | 酢コショウ（酢に胡椒をふる食べ方） |
-| `other_local_style` | その他地域スタイル（マヨ・ゆずこしょう等） |
-| `unknown` | 該当なし・信頼度不足 |
+Gyoza (Japanese dumplings) are eaten everywhere in Japan, but *how* people dip them varies dramatically by region. In Kobe, miso-based sauce is the norm. In Tokyo, a self-mixed soy-vinegar blend is common. Some places use vinegar with black pepper. Others don't dip at all.
 
-## パイプライン
+This project maps those regional differences by mining Japanese food blogs and news articles, classifying each article's condiment style, and rendering the result as an interactive choropleth map.
+
+---
+
+## Condiment Labels
+
+| Label | Description |
+|-------|-------------|
+| `prepared_tare` | Pre-made bottled sauce served by the restaurant |
+| `self_mix_soy_vinegar` | DIY soy sauce + vinegar blend at the table |
+| `miso_dare` | Miso-based dipping sauce |
+| `su_kosho` | Vinegar + black pepper (no soy) |
+| `other_local_style` | Regional variants — mayo, yuzu pepper, sesame, etc. |
+| `unknown` | No condiment signal detected |
+
+---
+
+## Pipeline
 
 ```
-Discover → seeds.yaml → Crawl → Extract → Classify → Aggregate → Visualize
+Discover ──► seeds.yaml ──► Crawl ──► Extract ──► Classify ──► Aggregate ──► Visualize
 ```
 
-### 0. Discover（URL自動発見）
+| Stage | What it does |
+|-------|-------------|
+| **Discover** | Queries はてなブックマーク search RSS (free, no API key) to find gyoza-related URLs per prefecture |
+| **Crawl** | Fetches HTML/RSS/JS pages; respects `robots.txt`, enforces 3 s/domain rate limit, caches in SQLite |
+| **Extract** | Strips boilerplate with trafilatura; detects prefecture from text; filters non-gyoza articles |
+| **Classify** | Keyword-count rule classifier with NFKC normalization; confidence-weighted scoring |
+| **Aggregate** | Confidence-weighted label votes per prefecture; flags low-evidence prefectures (< 5 records) |
+| **Visualize** | Interactive folium choropleth map saved to `outputs/map.html` |
 
-**はてなブックマーク検索RSS** を使い、クロール対象URLを自動収集します。APIキー不要・無料。
+---
+
+## Quick Start
 
 ```bash
-# Phase 1 の4都府県を検索して seeds.yaml に自動追記
-docker compose run --rm app python scripts/discover_seeds.py --auto-append
-
-# 全47都道府県を対象に検索（時間がかかる）
+# One-time setup
+docker compose run --rm app python scripts/fetch_geodata.py
 docker compose run --rm app python scripts/discover_seeds.py --all-prefectures --auto-append
 
-# 候補を確認してから手動で追記する場合
-docker compose run --rm app python scripts/discover_seeds.py --prefectures 福岡県 広島県
-```
-
-- 1クエリあたり最大5ページ（200件）取得
-- タイトルに餃子キーワードを含まない記事は自動除外
-- 既に `seeds.yaml` に登録済みのURLは重複追加しない
-
-### 1–5. Crawl → Visualize
-
-```
-seeds.yaml → Crawl → Extract → Classify → Aggregate → Visualize
-```
-
-1. **Crawl** — `seeds.yaml` のURLをクロール（RSS/HTML対応）。robots.txt遵守・ドメイン別レート制限（3秒）・SQLiteキャッシュ（7日TTL）
-2. **Extract** — trafilaturaでHTML→テキスト変換、正規表現で都道府県を検出。餃子キーワードを含まない記事は除外
-3. **Classify** — キーワード辞書によるルールベース分類。NFKC正規化後にキーワード出現回数を集計し、割合でラベルを決定
-4. **Aggregate** — 確信度加重で都道府県ごとに集計、Parquet/CSV出力
-5. **Visualize** — foliumでコロプレス地図（`outputs/map.html`）を生成
-
-## クイックスタート
-
-```bash
-# 初回セットアップ
-docker compose run --rm app python scripts/fetch_geodata.py   # GeoJSONダウンロード
-docker compose run --rm app python scripts/discover_seeds.py --all-prefectures --auto-append
-
-# フルパイプライン実行
+# Run the full pipeline
 docker compose up app
 
-# クロールをスキップして再集計のみ
+# Re-aggregate without re-crawling
 docker compose run --rm app python scripts/run_pipeline.py --skip-crawl
 
-# ドライラン（ファイル書き込みなし）
+# Dry run (no file writes)
 docker compose run --rm app python scripts/run_pipeline.py --dry-run
 ```
 
-### seeds.yaml の書き方
+### Adding Crawl Targets
 
-`discover_seeds.py` で自動生成されますが、手動追加も可能です。
+`discover_seeds.py` handles this automatically, but manual entries are welcome:
 
 ```yaml
+# seeds.yaml
 sources:
   - type: rss
     url: https://example.com/feed
-    prefectures: []            # 空なら本文から自動検出
+    prefectures: []             # empty = auto-detect from text
 
   - type: html
     url: https://example.com/article
-    prefectures: ["大阪府"]    # 明示的に都道府県を指定
+    prefectures: ["大阪府"]
+
+  - type: playwright            # for JavaScript-heavy pages
+    url: https://example.com/spa
+    prefectures: ["兵庫県"]
 ```
 
-## 分類器の評価
+---
 
-ラベル付きテストセット（`tests/classifier_testset.yaml`）に対して precision / recall / F1 を計算します。
+## Current Coverage
+
+Pipeline results as of the last run (38 / 47 prefectures):
+
+| Prefecture | Label | Evidence | Notes |
+|------------|-------|----------|-------|
+| 兵庫県 (Hyogo) | `miso_dare` | 52 | Kobe's miso-sauce culture dominates |
+| 東京都 (Tokyo) | `prepared_tare` | 42 | |
+| 栃木県 (Tochigi) | `prepared_tare` | 42 | Utsunomiya gyoza capital |
+| 大阪府 (Osaka) | `prepared_tare` | 23 | |
+| 神奈川県 (Kanagawa) | `prepared_tare` | 18 | |
+| 宮崎県 (Miyazaki) | `prepared_tare` | 11 | Surprise #1 gyoza city |
+| 福岡県 (Fukuoka) | `prepared_tare` | 7 | |
+| 埼玉県 (Saitama) | `prepared_tare` | 6 | |
+| 群馬県〜鹿児島県 | `prepared_tare` | 1–5 | Low evidence |
+
+9 prefectures remain uncovered — gyoza tare content is simply sparse online for those regions.
+
+---
+
+## Classifier Evaluation
+
+Evaluated against a manually labeled test set (`tests/classifier_testset.yaml`, 40 cases):
+
+```
+label                     precision    recall        f1  support
+----------------------------------------------------------------
+prepared_tare                 1.000     1.000     1.000        7
+self_mix_soy_vinegar          0.875     1.000     0.933        7
+miso_dare                     1.000     1.000     1.000        6
+su_kosho                      1.000     1.000     1.000        5
+other_local_style             1.000     1.000     1.000        6
+unknown                       1.000     0.889     0.941        9
+----------------------------------------------------------------
+macro avg                     0.979     0.981     0.979       40
+
+Accuracy: 39/40 = 0.975
+```
 
 ```bash
 docker compose run --rm app python scripts/evaluate_classifier.py --verbose
 ```
 
-現在の評価結果（macro avg）：Precision 0.979 / Recall 0.981 / F1 0.979（40件テストセット）
+---
 
-キーワードを追加・変更したら必ず実行してリグレッションがないか確認してください。
+## Tech Stack
 
-## 分類ロジック（Phase 1）
+| Layer | Libraries |
+|-------|-----------|
+| Crawling | `httpx`, `feedparser`, `playwright` |
+| Text extraction | `trafilatura` |
+| Data | `pandas`, `pyarrow` |
+| Geo / Map | `geopandas`, `folium` |
+| Search | はてなブックマーク RSS (no API key) |
 
-`classify/labels.py` のキーワード辞書を使ったルールベース分類。
+---
 
-```
-1. テキストをNFKC正規化
-2. 各ラベルのキーワードが何回出現するか count()
-3. 全ヒット数で割って正規化（割合に変換）
-4. 最大割合のラベルを採用
-   - confidence = min(割合, 0.95)
-   - 上位2ラベルの差 ≤ 0.1 → ambiguous = True
-   - confidence < 0.3 → unknown
-```
+## Roadmap
 
-キーワードの追加は `classify/labels.py` を編集するだけです。
+| Phase | Goal | Status |
+|-------|------|--------|
+| 1 | Rule-based classifier, 4-prefecture focus, はてなブックマーク seed discovery | ✅ Done |
+| 2 | Keyword dictionary expansion, negation handling | 🚧 In progress |
+| 3 | Full 47-prefecture coverage, Playwright for JS-heavy sites | 🚧 In progress (38/47) |
 
-## 実装フェーズ
+---
 
-| フェーズ | 内容 | 状態 |
-|---------|------|------|
-| Phase 1 | ルールベース分類・はてなブックマーク検索でURL自動発見 | ✅ 実装済み |
-| Phase 2 | キーワード辞書の充実、否定表現対応（「〜ではなく」検出） | 着手中 |
-| Phase 3 | 全47都道府県展開、Playwright対応 | 未着手 |
-
-## 現在のカバレッジ（最終パイプライン実行結果）
-
-| 都道府県 | 主要ラベル | 証拠数 | 備考 |
-|---------|-----------|--------|------|
-| 兵庫県 | miso_dare | 52 | 神戸の味噌だれ文化を強く反映 |
-| 東京都 | prepared_tare | 42 | |
-| 栃木県 | prepared_tare | 42 | 宇都宮餃子が中心 |
-| 大阪府 | prepared_tare | 23 | |
-| 神奈川県 | prepared_tare | 18 | |
-| 宮崎県 | prepared_tare | 11 | 隠れた餃子大国 |
-| 福岡県 | prepared_tare | 7 | |
-| 埼玉県 | prepared_tare | 6 | |
-| 群馬県〜鹿児島県 | prepared_tare | 1〜5 | 証拠数少（low_evidence） |
-
-- カバー都道府県：**35 / 47**（seeds.yaml 248件から266文書取得・重複除去後255件）
-- 未カバー：12県（秋田・山梨・長野・三重・奈良・島根・香川・愛媛・高知・熊本・長野・福井）
-- 愛知県は1件のみ（名古屋の味噌だれ文化はWebコンテンツが少なく検索で捕捉困難）
-
-## 必要環境
-
-- Docker
-
-## ライセンス
+## License
 
 MIT

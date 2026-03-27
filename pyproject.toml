@@ -30,6 +30,7 @@ dependencies = [
 dev = [
     "pytest>=8",
     "pytest-asyncio>=0.23",
+    "markdown>=3.6",
 ]
 
 [tool.setuptools.packages.find]
