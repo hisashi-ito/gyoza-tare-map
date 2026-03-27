@@ -87,7 +87,7 @@ sources:
 
 Pipeline results as of the last run (38 / 47 prefectures):
 
-![Gyoza Tare Map](docs/map_screenshot.png)
+<img src="docs/map_screenshot.png" alt="Gyoza Tare Map" width="600">
 
 | Prefecture | Label | Evidence | Notes |
 |------------|-------|----------|-------|
