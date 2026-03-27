@@ -113,7 +113,7 @@ This pipeline mines food blogs and bookmark-aggregated articles — a corpus dom
 
 The analogy is Abraham Wald's famous WWII analysis of aircraft damage. The Allied forces observed bullet holes concentrated on the wings and fuselage of returning planes and proposed reinforcing those areas. Wald pointed out the flaw: *the planes that were shot in the engines never came back*. The absence of engine damage in the sample was the strongest possible evidence that engines were the critical vulnerability.
 
-![Wald's aircraft damage diagram](https://substackcdn.com/image/fetch/$s_!b9mw!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fbucketeer-e05bbc84-baa3-437e-9518-adb32be77984.s3.amazonaws.com%2Fpublic%2Fimages%2F606f8cdf-3899-4311-b46d-b7e6c2eac8bf_962x610.png)
+<img src="https://substackcdn.com/image/fetch/$s_!b9mw!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fbucketeer-e05bbc84-baa3-437e-9518-adb32be77984.s3.amazonaws.com%2Fpublic%2Fimages%2F606f8cdf-3899-4311-b46d-b7e6c2eac8bf_962x610.png" alt="Wald's aircraft damage diagram" width="800">
 
 *Source: [The Legend of Abraham Wald](https://www.privatdozent.co/p/the-legend-of-abraham-wald), Privatdozent*
 
