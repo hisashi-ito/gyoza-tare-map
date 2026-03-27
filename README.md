@@ -2,7 +2,7 @@
 <img src="images/logo.png" width="1000px">
 </p>
 
-# gyoza-tare-map 🥟
+## gyoza-tare-map 🥟
 
 > *How does Japan dip its gyoza (dumplings)?*
 
@@ -10,7 +10,7 @@ A data pipeline that automatically discovers, crawls, classifies, and visualizes
 
 ---
 
-## The Idea
+### The Idea
 
 Gyoza (Japanese dumplings) are eaten everywhere in Japan, but *how* people dip them varies dramatically by region. In Kobe, miso-based sauce is the norm. In Tokyo, a self-mixed soy-vinegar blend is typical. Some places use vinegar with black pepper. Some restaurants even recommend eating them plain, without any dipping sauce.
 
@@ -18,7 +18,7 @@ This project maps those regional differences by mining Japanese food blogs and n
 
 ---
 
-## Condiment Labels
+### Condiment Labels
 
 | Label | Description |
 |-------|-------------|
@@ -31,7 +31,7 @@ This project maps those regional differences by mining Japanese food blogs and n
 
 ---
 
-## Pipeline
+### Pipeline
 
 ```mermaid
 flowchart LR
@@ -54,7 +54,7 @@ flowchart LR
 
 ---
 
-## Quick Start
+### Quick Start
 
 ```bash
 # One-time setup
@@ -71,7 +71,7 @@ docker compose run --rm app python scripts/run_pipeline.py --skip-crawl
 docker compose run --rm app python scripts/run_pipeline.py --dry-run
 ```
 
-### Adding Crawl Targets
+#### Adding Crawl Targets
 
 `discover_seeds.py` handles this automatically, but manual entries are welcome:
 
@@ -93,7 +93,7 @@ sources:
 
 ---
 
-## Current Coverage
+### Current Coverage
 
 Pipeline results as of the last run (38 / 47 prefectures):
 
@@ -115,7 +115,7 @@ Pipeline results as of the last run (38 / 47 prefectures):
 
 ---
 
-## A Note on Survivorship Bias
+### A Note on Survivorship Bias
 
 The near-absence of `self_mix_soy_vinegar` in the results is not evidence that Japanese people rarely mix their own soy-vinegar dip. It is evidence of the opposite: the practice is so unremarkable that no one writes about it.
 
@@ -133,7 +133,7 @@ In the same way, what this map actually measures is **the noteworthiness of a re
 
 ---
 
-## Classifier Evaluation
+### Classifier Evaluation
 
 Evaluated against a manually labeled test set (`tests/classifier_testset.yaml`, 40 cases):
 
@@ -158,7 +158,7 @@ docker compose run --rm app python scripts/evaluate_classifier.py --verbose
 
 ---
 
-## Tech Stack
+### Tech Stack
 
 | Layer | Libraries |
 |-------|-----------|
@@ -170,16 +170,7 @@ docker compose run --rm app python scripts/evaluate_classifier.py --verbose
 
 ---
 
-## Roadmap
 
-| Phase | Goal | Status |
-|-------|------|--------|
-| 1 | Rule-based classifier, 4-prefecture focus, はてなブックマーク seed discovery | ✅ Done |
-| 2 | Keyword dictionary expansion, negation handling | 🚧 In progress |
-| 3 | Full 47-prefecture coverage, Playwright for JS-heavy sites | 🚧 In progress (38/47) |
-
----
-
-## License
+### License
 
 MIT
