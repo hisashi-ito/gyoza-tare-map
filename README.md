@@ -1,3 +1,7 @@
+<p align="center">
+<img src="images/logo.png" width="1000px">
+</p>
+
 # gyoza-tare-map 🥟
 
 > *How does Japan dip its gyoza (dumplings)?*
