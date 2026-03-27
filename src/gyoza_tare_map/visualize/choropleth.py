@@ -1,6 +1,7 @@
 """Generate a folium choropleth map colored by dominant gyoza condiment label."""
 from __future__ import annotations
 
+import json
 from pathlib import Path
 
 import folium
@@ -41,39 +42,55 @@ def build_map(
 
     m = folium.Map(location=[36.5, 137.5], zoom_start=5, tiles="CartoDB positron")
 
-    # Encode dominant_label as integer for choropleth color scale
-    label_order = list(LABEL_COLORS.keys())
-    df = df.copy()
-    df["label_code"] = df["dominant_label"].apply(
-        lambda l: label_order.index(l) if l in label_order else len(label_order)
-    )
+    # Build lookup: prefecture name → (color, label_ja, evidence_count, low_evidence)
+    pref_info: dict[str, dict] = {}
+    for _, row in df.iterrows():
+        label = row["dominant_label"]
+        pref_info[row["prefecture"]] = {
+            "color": LABEL_COLORS.get(label, "#cccccc"),
+            "label_ja": LABEL_NAMES_JA.get(label, label),
+            "evidence_count": int(row["evidence_count"]),
+            "low_evidence": bool(row["low_evidence"]),
+        }
 
-    folium.Choropleth(
-        geo_data=str(geojson_path),
+    geojson_data = json.loads(geojson_path.read_text(encoding="utf-8"))
+
+    def style_function(feature: dict) -> dict:
+        name = feature["properties"].get("nam_ja", "")
+        info = pref_info.get(name)
+        color = info["color"] if info else "#eeeeee"
+        return {
+            "fillColor": color,
+            "fillOpacity": 0.75,
+            "color": "#555555",
+            "weight": 0.5,
+        }
+
+    def tooltip_fn(feature: dict) -> str:
+        name = feature["properties"].get("nam_ja", "")
+        info = pref_info.get(name)
+        if not info:
+            return f"<b>{name}</b><br>データなし"
+        low = " ⚠低証拠" if info["low_evidence"] else ""
+        return (
+            f"<b>{name}</b><br>"
+            f"スタイル: {info['label_ja']}{low}<br>"
+            f"証拠数: {info['evidence_count']}"
+        )
+
+    folium.GeoJson(
+        geojson_data,
         name="gyoza-tare",
-        data=df,
-        columns=["prefecture", "label_code"],
-        key_on="feature.properties.nam_ja",
-        fill_color="YlOrRd",
-        fill_opacity=0.7,
-        line_opacity=0.3,
-        legend_name="餃子のたれスタイル（コード）",
-        nan_fill_color="#eeeeee",
+        style_function=style_function,
+        tooltip=folium.GeoJsonTooltip(
+            fields=["nam_ja"],
+            aliases=["都道府県"],
+            localize=True,
+        ),
     ).add_to(m)
 
-    # Add tooltip with human-readable info
-    style_function = lambda _: {"fillOpacity": 0, "weight": 0}
-    tooltip_data = {
-        row["prefecture"]: {
-            "label": LABEL_NAMES_JA.get(row["dominant_label"], row["dominant_label"]),
-            "count": int(row["evidence_count"]),
-            "low": bool(row["low_evidence"]),
-        }
-        for _, row in df.iterrows()
-    }
-
     # Color legend as HTML overlay
-    legend_html = _legend_html()
+    legend_html = _legend_html(df)
     m.get_root().html.add_child(folium.Element(legend_html))
 
     folium.LayerControl().add_to(m)
@@ -86,10 +103,23 @@ def build_map(
     return m
 
 
-def _legend_html() -> str:
+def _legend_html(df: pd.DataFrame | None = None) -> str:
+    # Only show labels that actually appear in the data
+    if df is not None:
+        used_labels = set(df["dominant_label"].tolist())
+    else:
+        used_labels = set(LABEL_COLORS.keys())
+    # Always show uncovered
     items = "".join(
-        f'<li><span style="background:{color};display:inline-block;width:14px;height:14px;margin-right:6px;"></span>{LABEL_NAMES_JA[label]}</li>'
+        f'<li><span style="background:{color};display:inline-block;width:14px;height:14px;'
+        f'border-radius:3px;margin-right:6px;"></span>{LABEL_NAMES_JA[label]}</li>'
         for label, color in LABEL_COLORS.items()
+        if label in used_labels
+    )
+    # Add "no data" entry
+    items += (
+        '<li><span style="background:#eeeeee;display:inline-block;width:14px;height:14px;'
+        'border-radius:3px;margin-right:6px;border:1px solid #ccc;"></span>データなし</li>'
     )
     return f"""
     <div style="position:fixed;bottom:40px;left:40px;z-index:1000;background:white;
